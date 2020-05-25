@@ -3,17 +3,104 @@
 <head>
     <script src="./CoronaUpdate.js"></script>
     <link href="./css/coronahome.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+    <script type='text/javascript'>
+        $(window).load(function () {
+            $(".se-pre-con").fadeOut("slow");;
+        });
+    </script>
+    <script type="application/ld+json">
+                {
+                    "@context" : "http://schema.org",
+                    "@type" : "Article",
+                    "name" : "Corona Virus Active Cases"
+                }
+    </script>
+    <script>
+        function sortTable(n) {
+            var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+            table = document.getElementById("country-data");
+            switching = true;
+            //Set the sorting direction to ascending:
+            dir = "desc";
+            /*Make a loop that will continue until
+            no switching has been done:*/
+            while (switching) {
+                //start by saying: no switching is done:
+                switching = false;
+                rows = table.rows;
+                console.log('rows: ', rows)
+                /*Loop through all table rows (except the
+                first, which contains table headers):*/
+                for (i = 1; i < (rows.length - 1); i++) {
+                    //start by saying there should be no switching:
+                    console.log('inside')
+                    shouldSwitch = false;
+                    /*Get the two elements you want to compare,
+                    one from current row and one from the next:*/
+                    x = rows[i].getElementsByTagName("TD")[n];
+                    console.log('x value', x)
+                    console.log('i value', i)
+                    console.log('row value', rows[i])
+                    y = rows[i + 1].getElementsByTagName("TD")[n];
+                    console.log('y value', y)
+                    /*check if the two rows should switch place,
+                    based on the direction, asc or desc:*/
+                    if (dir == "asc") {
+                        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                            //if so, mark as a switch and break the loop:
+                            shouldSwitch = true;
+                            break;
+                        }
+                    } else if (dir == "desc") {
+                        console.log('check', x)
+                        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                            //if so, mark as a switch and break the loop:
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                }
+                if (shouldSwitch) {
+                    /*If a switch has been marked, make the switch
+                    and mark that a switch has been done:*/
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                    //Each time a switch is done, increase this count by 1:
+                    switchcount++;
+                } else {
+                    /*If no switching has been done AND the direction is "asc",
+                    set the direction to "desc" and run the while loop again.*/
+                    if (switchcount == 0 && dir == "asc") {
+                        dir = "desc";
+                        switching = true;
+                    }
+                }
+            }
+        }
+    </script>
+
 </head>
 
 <body>
+
+    <div class="se-pre-con"></div>
+
     <div id="maincounter-wrap" style="margin-top:15px">
         <h1> Corona Virus Active Cases</h1>
-        <button onclick="getData()" id="data">Active Cases</button>
+        <button onclick="getGlobalData()" id="data">Refresh</button>
         <p id="result" style="margin-top:15px"></p>
-        <p>Global Data: </p>
+        <div id="headline">Global Data: </div>
+        <br>
         <!-- <p id="total-confirmed" style="margin-top:15px"></p> -->
 
-        <table style="width:100%" border="100%">
+        <!-- <button class="buttonload">
+            <i class="fa fa-spinner fa-spin"></i>Loading
+        </button> -->
+
+        <table id="record">
             <tr>
                 <th>Title</th>
                 <th>Number</th>
@@ -21,34 +108,54 @@
             <tr>
                 <td>Total Confirmed</td>
                 <td>
-                    <p id="total-confirmed" style="margin-top:15px"></p>
+                    <p id="total-confirmed"></p>
                 </td>
             </tr>
             <tr>
                 <td>New Confirmed</td>
                 <td>
-                    <p id="new-confirmed" style="margin-top:15px"></p>
+                    <p id="new-confirmed"></p>
                 </td>
             </tr>
             <tr>
                 <td>New Deaths</td>
                 <td>
-                    <p id="new-deaths" style="margin-top:15px"></p>
-                </td>
-            </tr>
-
-            <tr>
-                <td>New Deaths</td>
-                <td>
-                    <p id="new-recovered" style="margin-top:15px"></p>
+                    <p id="new-deaths"></p>
                 </td>
             </tr>
 
             <tr>
                 <td>New Deaths</td>
                 <td>
-                    <p id="total-recovered" style="margin-top:15px"></p>
+                    <p id="new-recovered"></p>
                 </td>
+            </tr>
+
+            <tr>
+                <td>New Deaths</td>
+                <td>
+                    <p id="total-recovered"></p>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+    <br>
+
+    <div>
+        <!-- <button id="countrywise" onclick="getCounteyData()"> Country List</button> -->
+        <div id="headline">Country Data: </div>
+        <br>
+
+        <table id="country-data">
+            <tr>
+                <th>Country</th>
+                <th onclick="sortTable(1)">New Confirmed</th>
+                <th onclick="sortTable(2)">Total Confirmed</th>
+                <th onclick="sortTable(3)">New Deaths</th>
+                <th onclick="sortTable(4)">Total Deaths</th>
+                <th onclick="sortTable(5)">New Recovered</th>
+                <th onclick="sortTable(6)">Total Recovered</th>
             </tr>
 
         </table>

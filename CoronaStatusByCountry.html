@@ -1,0 +1,60 @@
+<html>
+
+<head>
+    <script src="./CoronaUpdate.js"></script>
+    <link href="./css/coronahome.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+    <script type='text/javascript'>
+        $(window).load(function () {
+            $(".se-pre-con").fadeOut("slow");;
+        });
+    </script>
+</head>
+
+<body>
+
+    <div id="maincounter-wrap" style="margin-top:15px">
+        <h1> Corona Virus Cases by Country</h1>
+        <button onclick="getCountryData('Australia')" id="data">Refresh</button>
+        <p id="result" style="margin-top:15px"></p>
+
+        <table id="record">
+            <tr>
+                <th>Title</th>
+                <th>Number</th>
+            </tr>
+            <tr>
+                <td>Confirmed</td>
+                <td>
+                    <p id="confirmed"></p>
+                </td>
+            </tr>
+            <tr>
+                <td>Deaths</td>
+                <td>
+                    <p id="deaths"></p>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Recovered</td>
+                <td>
+                    <p id="recovered"></p>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Active</td>
+                <td>
+                    <p id="active"></p>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+    <br>
+</body>
+
+</html>
